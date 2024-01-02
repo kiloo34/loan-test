@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\LoanController as AdminLoan;
 
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboard;
+use App\Http\Controllers\Customer\LoanController as CustomerLoan;
+
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -30,6 +33,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth', 'permission', 'verified']], function() {
+// Route::middleware(['auth', 'permission', 'verified'])->group(function () {
 
     // Admin User
     Route::group([
@@ -40,7 +44,9 @@ Route::group(['middleware' => ['auth', 'permission', 'verified']], function() {
         // Dashboard
         Route::get('/dashboard', AdminDashboard::class)->name('dashboard.index');
         // Route::get('/dashboard', [DashboardController::class])->name('dashboard.index');
-        
+
+        // Loan Feature
+        Route::resource('loan', AdminLoan::class)->except(['create']);
     });
 
     Route::group([
@@ -51,13 +57,15 @@ Route::group(['middleware' => ['auth', 'permission', 'verified']], function() {
         // Dashboard
         Route::get('/dashboard', CustomerDashboard::class)->name('dashboard.index');
         // Route::get('/dashboard', [DashboardController::class])->name('dashboard.index');
-        
+    
+        // Loan Feature
+        Route::resource('loan', CustomerLoan::class);
     }); 
 });
 
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
