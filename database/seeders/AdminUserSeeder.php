@@ -21,10 +21,27 @@ class AdminUserSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => bcrypt('123456')
         ]);
-        $permissions = Permission::create(['name' => 'admin.dashboard.index']);
+        // $permissions = Permission::create(['name' => 'admin.dashboard.index']);
+        // $role = Role::create(['name' => 'admin'])
+        //     ->givePermissionTo('admin.dashboard.index');
+        Permission::create(['name' => 'admin.dashboard.index', 'guard_name' => 'web']);
+        Permission::create(['name' => 'admin.loan.index', 'guard_name' => 'web']);
+        Permission::create(['name' => 'admin.loan.store', 'guard_name' => 'web']);
+        Permission::create(['name' => 'admin.loan.create', 'guard_name' => 'web']);
+        Permission::create(['name' => 'admin.loan.show', 'guard_name' => 'web']);
+        Permission::create(['name' => 'admin.loan.edit', 'guard_name' => 'web']);
+        Permission::create(['name' => 'admin.loan.update', 'guard_name' => 'web']);
+        Permission::create(['name' => 'admin.loan.destroy', 'guard_name' => 'web']);
         $role = Role::create(['name' => 'admin'])
-            ->givePermissionTo('admin.dashboard.index');
-        $role->syncPermissions($permissions);
+            ->givePermissionTo('admin.dashboard.index', 
+                'admin.loan.index',
+                'admin.loan.create',
+                'admin.loan.store',
+                'admin.loan.show',
+                'admin.loan.edit',
+                'admin.loan.update',
+                'admin.loan.destroy');
+        // $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);
     }
 }
