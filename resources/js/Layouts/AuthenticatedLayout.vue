@@ -30,9 +30,11 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <!-- <NavLink :href="route('dashboard')" :active="route().current('dashboard')"> -->
-                                <NavLink :href="route($page.props.auth.user.roles[0]['name']+'.dashboard.index')" :active="route().current($page.props.auth.user.roles[0]['name']+'.dashboard.index')">
+                                <NavLink :href="route($page.props.auth.user.roles[0]['name']+'.dashboard.index')" :active="$page.props.active == 'dashboard'">
                                     Dashboard
+                                </NavLink>
+                                <NavLink :href="route($page.props.auth.user.roles[0]['name']+'.loan.index')" :active="$page.props.active == 'loan'">
+                                    Loan
                                 </NavLink>
                             </div>
                         </div>
@@ -114,8 +116,11 @@ const showingNavigationDropdown = ref(false);
                     class="sm:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route($page.props.auth.user.roles[0]['name']+'.dashboard.index')" :active="route().current($page.props.auth.user.roles[0]['name']+'.dashboard.index')">
+                        <ResponsiveNavLink :href="route($page.props.auth.user.roles[0]['name']+'.dashboard.index')" :active="$page.props.active == 'dashboard'">
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route($page.props.auth.user.roles[0]['name']+'.loan.index')" :active="$page.props.active == 'loan'">
+                            Loan
                         </ResponsiveNavLink>
                     </div>
 
@@ -141,7 +146,19 @@ const showingNavigationDropdown = ref(false);
             <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
+                    <div class="lg:flex lg:items-center lg:justify-between">
+                        <div class="min-w-0 flex-1">
+                            <slot name="header" />  
+                            <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+                                <div class="mt-2 flex items-center text-sm text-gray-500">
+                                    <slot name="subheader" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5 flex lg:ml-4 lg:mt-0">
+                            <slot name="actionButton" />  
+                        </div>
+                    </div>
                 </div>
             </header>
 
