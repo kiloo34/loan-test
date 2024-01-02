@@ -4,13 +4,13 @@ import { Head } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Loan" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                Dashboard
-            </h2> 
+                Loan
+            </h2>  
         </template>
 
         <div class="py-12">
@@ -22,4 +22,3 @@ import { Head } from '@inertiajs/vue3';
         </div>
     </AuthenticatedLayout>
 </template>
-
